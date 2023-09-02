@@ -11,4 +11,6 @@ add_executable(CPPGrader main.cpp
         CppExecutor.h
         GraderApp.cpp
         GraderApp.h
+        CppGrader.cpp
+        CppGrader.h
 )

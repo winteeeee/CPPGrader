@@ -10,7 +10,8 @@ using namespace std;
 class CppCompiler {
 private:
     vector<string>& 소스코드들;
-    vector<string>& 테스트케이스들;
+    vector<string>& 입력파일들;
+    vector<string>& 정답파일들;
     CppExecutor 실행기;
     enum 컴파일_옵션 {
         일반 = 0,
@@ -18,6 +19,6 @@ private:
     };
 
 public:
-    CppCompiler(vector <string> &소스코드들, vector <string> &테스트케이스들);
+    CppCompiler(vector <string> &소스코드들, vector <string> &입력파일들, vector <string> &정답파일들);
     void 컴파일(const string &디렉토리_경로, const int &옵션);
 };
