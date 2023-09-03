@@ -11,5 +11,6 @@ private:
     CppGrader 채점기;
 public:
     CppExecutor();
-    void 실행(const string& 입력파일_경로, const string& 정답파일_경로);
+    void 실행(const string& 입력파일_경로, const string& 학생_정보, const string& 소스코드);
+    void 출력_스트림_쓰기(const string& 문자열);
 };
