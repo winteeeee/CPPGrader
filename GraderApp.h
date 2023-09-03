@@ -9,7 +9,7 @@ namespace fs = filesystem;
 
 class GraderApp {
 private:
-    vector<string> 테스트케이스_로드();
+    vector<vector<string>> 테스트케이스_로드();
 
 public:
     void 실행();

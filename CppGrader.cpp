@@ -2,6 +2,7 @@
 
 void CppGrader::코드_출력(const std::string &경로) {
     ifstream 입력_스트림(경로);
+    cout << 경로 << endl;
     if (입력_스트림.is_open()) {
         string 줄;
 
@@ -19,7 +20,7 @@ CppGrader::~CppGrader() {
     출력_스트림.close();
 }
 
-void CppGrader::채점(string 소스코드) {
+void CppGrader::채점(const vector<string>& 소스코드들) {
     string 명령;
     bool 탈출_불가 = true;
 
@@ -34,9 +35,11 @@ void CppGrader::채점(string 소스코드) {
             출력_스트림 << "X ";
             탈출_불가 = false;
         } else if (명령 == "c") {
-            소스코드.replace(0, 1, "");
-            소스코드.replace(소스코드.length() - 1, 1, "");
-            코드_출력(소스코드);
+            for (string 소스코드 : 소스코드들) {
+                소스코드.replace(0, 1, "");
+                소스코드.replace(소스코드.length() - 1, 1, "");
+                코드_출력(소스코드);
+            }
         } else if (명령 == "?") {
             cout << "y - 정답" << endl;
             cout << "n - 오답" << endl;
