@@ -9,15 +9,15 @@ using namespace std;
 
 class CppCompiler {
 private:
-    vector<string>& 소스코드들;
-    vector<string>& 입력파일들;
+    ofstream& 출력_스트림;
+    vector<string> &소스코드들;
     CppExecutor 실행기;
     enum 컴파일_옵션 {
-        일반 = 0,
-        각각_컴파일 = 1,
+        일반 = 1,
+        각각_컴파일 = 2,
     };
 
 public:
-    CppCompiler(vector <string> &소스코드들, vector <string> &입력파일들);
-    void 컴파일(const string &디렉토리_경로, const int &옵션);
+    CppCompiler(vector <string> &소스코드들, ofstream& 출력_스트림);
+    void 컴파일(const string &디렉토리_경로, const vector<string>& 입력파일들, const int &옵션);
 };

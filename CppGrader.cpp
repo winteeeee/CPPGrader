@@ -2,7 +2,7 @@
 
 void CppGrader::코드_출력(const std::string &경로) {
     ifstream 입력_스트림(경로);
-    cout << 경로 << endl;
+    cout << endl << " ===== " << 경로 << " ===== " << endl;
     if (입력_스트림.is_open()) {
         string 줄;
 
@@ -12,9 +12,10 @@ void CppGrader::코드_출력(const std::string &경로) {
     } else {
         cout << "코드 출력 실패" << endl;
     }
+    cout << '\n';
 }
 
-CppGrader::CppGrader(const std::string &경로) : 출력_스트림(경로) {}
+CppGrader::CppGrader(ofstream& 출력_스트림) : 출력_스트림(출력_스트림) {}
 
 CppGrader::~CppGrader() {
     출력_스트림.close();
@@ -49,8 +50,4 @@ void CppGrader::채점(const vector<string>& 소스코드들) {
             cout << "잘못된 명령어" << endl;
         }
     }
-}
-
-void CppGrader::출력_스트림_쓰기(const string &문자열) {
-    출력_스트림 << 문자열 << endl;
 }
