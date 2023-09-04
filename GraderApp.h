@@ -14,5 +14,6 @@ private:
 
 public:
     GraderApp(const string& 채점파일명);
+    ~GraderApp();
     void 실행();
 };

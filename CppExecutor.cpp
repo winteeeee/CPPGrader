@@ -2,9 +2,9 @@
 
 CppExecutor::CppExecutor(ofstream& 출력_스트림) : 채점기(출력_스트림) {}
 
-void CppExecutor::실행(const string& 입력파일_경로, const string& 학생_정보, const vector<string>& 소스코드들) {
+void CppExecutor::실행(const string& 입력파일_경로, const string& 디렉토리_경로, const vector<string>& 소스코드들) {
     cout << endl << "=============================" << endl;
-    cout << "실행 디렉토리 : " << 학생_정보 << endl << "소스코드 : ";
+    cout << "실행 디렉토리 : " << 디렉토리_경로 << endl << "소스코드 : ";
     for (const string& 소스코드 : 소스코드들) {
         cout << 소스코드 << " ";
     }

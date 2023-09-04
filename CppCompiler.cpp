@@ -3,10 +3,9 @@
 CppCompiler::CppCompiler(vector <string> &소스코드들, ofstream& 출력_스트림)
 : 출력_스트림(출력_스트림), 소스코드들(소스코드들), 실행기(출력_스트림) {}
 
-void CppCompiler::컴파일(const string &디렉토리_경로, const vector<string>& 입력파일들, const int &옵션) {
-    cout << "현재 작업 디렉토리 : " << 디렉토리_경로 << endl;
+void CppCompiler::컴파일(const string &디렉토리_경로, const string &학생_정보, const vector<string>& 입력파일들, const int &옵션) {
+    cout << "채점 대상 학생 : " << 학생_정보 << endl;
     chdir(디렉토리_경로.c_str());
-    출력_스트림 << '[' + 디렉토리_경로 + ']';
 
     if (옵션 == CppCompiler::컴파일_옵션::일반) {
         string 명령어 = "g++ ";
@@ -36,8 +35,8 @@ void CppCompiler::컴파일(const string &디렉토리_경로, const vector<stri
                 }
             }
         }
+    } else {
+        cout << "잘못된 옵션";
     }
-
-    출력_스트림 << '\n';
     소스코드들.clear();
 }

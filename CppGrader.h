@@ -11,6 +11,5 @@ private:
     void 코드_출력(const string& 경로);
 public:
     CppGrader(ofstream& 출력_스트림);
-    ~CppGrader();
     void 채점(const vector<string>& 소스코드);
 };

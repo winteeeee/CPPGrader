@@ -17,10 +17,6 @@ void CppGrader::코드_출력(const std::string &경로) {
 
 CppGrader::CppGrader(ofstream& 출력_스트림) : 출력_스트림(출력_스트림) {}
 
-CppGrader::~CppGrader() {
-    출력_스트림.close();
-}
-
 void CppGrader::채점(const vector<string>& 소스코드들) {
     string 명령;
     bool 탈출_불가 = true;
