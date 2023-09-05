@@ -40,18 +40,20 @@ void GraderApp::실행() {
     string 현재_디렉토리;
     string 현재_학생;
 
+    출력_스트림 << "===================================";
     for (const auto &엔트리 : fs::recursive_directory_iterator(fs::current_path())) {
         if (엔트리.is_directory()) {
-            string 디렉토리명 = 엔트리.path().filename().string();
-            if (디렉토리명.find('_') != string::npos) {
-                출력_스트림 << '[' << 디렉토리명 << ']' << endl;
-                현재_학생 = 디렉토리명;
+            if (!소스코드들.empty()) {
+                컴파일러.컴파일(현재_디렉토리, 현재_학생, 입력파일들[(인덱스++) % 입력파일들.size()], 옵션);
             }
 
-            if (!소스코드들.empty()) {
-                컴파일러.컴파일(현재_디렉토리, 현재_학생, 입력파일들[인덱스++], 옵션);
-            }
             현재_디렉토리 = 엔트리.path().string();
+            string 디렉토리명 = 엔트리.path().filename().string();
+
+            if (디렉토리명.find('_') != string::npos) {
+                출력_스트림 << endl << '[' << 디렉토리명 << ']' << endl;
+                현재_학생 = 디렉토리명;
+            }
         } else {
             string 파일명 = 엔트리.path().filename().string();
             if (파일명.find(".cpp") != string::npos) {
@@ -61,6 +63,7 @@ void GraderApp::실행() {
     }
 
     if (!소스코드들.empty()) {
-        컴파일러.컴파일(현재_디렉토리, 현재_학생, 입력파일들[인덱스++],옵션);
+        컴파일러.컴파일(현재_디렉토리, 현재_학생, 입력파일들[(인덱스++) % 입력파일들.size()],옵션);
     }
+    출력_스트림 << endl << "===================================";
 }

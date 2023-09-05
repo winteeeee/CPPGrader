@@ -12,7 +12,7 @@ void CppExecutor::실행(const string& 입력파일_경로, const string& 디렉
 
     string 명령어 = ".\\output";
     if (입력파일_경로.find("수동") == string::npos) {
-        명령어 += (" < " + 입력파일_경로);
+        명령어 += (" < " + ("\"" + 입력파일_경로 + "\""));
         system(명령어.c_str());
     } else {
         system(명령어.c_str());
