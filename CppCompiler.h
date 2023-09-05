@@ -19,5 +19,9 @@ private:
 
 public:
     CppCompiler(vector <string> &소스코드들, ofstream& 출력_스트림);
-    void 컴파일(const string &디렉토리_경로, const string &학생_정보, const vector<string>& 입력파일들, const int &옵션);
+    void 컴파일(const string &디렉토리_경로,
+                const string &학생_정보,
+                const vector<string> &입력파일들,
+                const vector<string> &정답파일들,
+                const int &옵션);
 };

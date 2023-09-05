@@ -1,10 +1,15 @@
 #include "GraderApp.h"
+#define 정수형 int
+#define 메인 main
+#define 자동 auto
+#define 반환 return
+#define 채점앱 GraderApp
 
-int main() {
-    auto 앱 = GraderApp("채점결과.txt");
+정수형 메인() {
+    자동 앱 = 채점앱("채점결과.txt");
     앱.실행();
-    //TODO 정답 케이스와 비교 후 다를 경우에만 출력하도록 변경
-    //TODO 메인 지정 기능 추가
+    //TODO 코드 출력 시 .h과 .hpp 파일도 같이 출력할 수 있도록 수정
+    //TODO 메인 파일 지정 기능 추가
 
-    return 0;
+    반환 0;
 }
