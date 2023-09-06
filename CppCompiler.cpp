@@ -26,6 +26,7 @@ void CppCompiler::컴파일(const string &디렉토리_경로,
                 const auto& 정답파일_경로 = 정답파일들[&입력파일_경로 - &입력파일들[0]];
                 실행기.실행(입력파일_경로, 정답파일_경로, 디렉토리_경로, "output.txt", 소스코드들);
             }
+            fs::remove("output.exe");
         }
     } else if (옵션 == CppCompiler::컴파일_옵션::각각_컴파일) {
         for (const auto &소스코드 : 소스코드들) {
@@ -39,6 +40,7 @@ void CppCompiler::컴파일(const string &디렉토리_경로,
                     const auto& 정답파일_경로 = 정답파일들[&입력파일_경로 - &입력파일들[0]];
                     실행기.실행(입력파일_경로, 정답파일_경로, 디렉토리_경로, "output.txt", 임시_벡터);
                 }
+                fs::remove("output.exe");
             }
         }
     } else {

@@ -4,7 +4,9 @@
 #include <fstream>
 #include <vector>
 #include <cstdlib>
+#include <filesystem>
 using namespace std;
+namespace fs = filesystem;
 
 class CppGrader {
 private:

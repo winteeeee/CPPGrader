@@ -87,4 +87,5 @@ void CppGrader::채점(const vector<string> &소스코드들, const string &정�
         cout << "FC 명령어가 정상적으로 실행되지 않음" << endl;
     }
     입력_스트림.close();
+    fs::remove("temp.txt");
 }

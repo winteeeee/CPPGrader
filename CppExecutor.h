@@ -3,8 +3,10 @@
 #include <string>
 #include <cstdlib>
 #include <iostream>
+#include <filesystem>
 #include "CppGrader.h"
 using namespace std;
+namespace fs = filesystem;
 
 class CppExecutor {
 private:
