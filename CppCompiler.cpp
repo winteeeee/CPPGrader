@@ -14,7 +14,9 @@ void CppCompiler::컴파일(const string &디렉토리_경로,
     if (옵션 == CppCompiler::컴파일_옵션::일반) {
         string 명령어 = "g++ ";
         for (const string &소스코드: 소스코드들) {
-            명령어 += (소스코드 + " ");
+            if (소스코드.find(".cpp") != string::npos) {
+                명령어 += (소스코드 + " ");
+            }
         }
         명령어 += " -o output";
 
@@ -30,17 +32,19 @@ void CppCompiler::컴파일(const string &디렉토리_경로,
         }
     } else if (옵션 == CppCompiler::컴파일_옵션::각각_컴파일) {
         for (const auto &소스코드 : 소스코드들) {
-            vector<string> 임시_벡터 = {소스코드};
+            if (소스코드.find(".cpp") != string::npos) {
+                vector<string> 임시_벡터 = {소스코드};
 
-            string 명령어 = "g++ " + 소스코드 + " -o output";
-            cout << "컴파일 중..." << endl;
-            int 컴파일_결과 = system(명령어.c_str());
-            if (!컴파일_결과) {
-                for (const auto &입력파일_경로 : 입력파일들) {
-                    const auto& 정답파일_경로 = 정답파일들[&입력파일_경로 - &입력파일들[0]];
-                    실행기.실행(입력파일_경로, 정답파일_경로, 디렉토리_경로, "output.txt", 임시_벡터);
+                string 명령어 = "g++ " + 소스코드 + " -o output";
+                cout << "컴파일 중..." << endl;
+                int 컴파일_결과 = system(명령어.c_str());
+                if (!컴파일_결과) {
+                    for (const auto &입력파일_경로: 입력파일들) {
+                        const auto &정답파일_경로 = 정답파일들[&입력파일_경로 - &입력파일들[0]];
+                        실행기.실행(입력파일_경로, 정답파일_경로, 디렉토리_경로, "output.txt", 임시_벡터);
+                    }
+                    fs::remove("output.exe");
                 }
-                fs::remove("output.exe");
             }
         }
     } else {

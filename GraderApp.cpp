@@ -64,7 +64,9 @@ void GraderApp::실행() {
             }
         } else {
             string 파일명 = 엔트리.path().filename().string();
-            if (파일명.find(".cpp") != string::npos) {
+            if (파일명.find(".cpp") != string::npos ||
+                파일명.find(".h") != string::npos ||
+                파일명.find(".h++") != string::npos) {
                 소스코드들.push_back("\"" + 파일명 + "\"");
             }
         }
