@@ -31,10 +31,15 @@ void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들
             출력_스트림 << "X ";
             탈출_불가 = false;
         } else if (명령 == "c") {
-            for (string 소스코드: 소스코드들) {
+            cin.ignore();
+            for (int 인덱스 = 0; 인덱스 < 소스코드들.size(); 인덱스++) {
+                string 소스코드 = 소스코드들[인덱스];
                 소스코드.replace(0, 1, "");
                 소스코드.replace(소스코드.length() - 1, 1, "");
                 코드_출력(소스코드);
+
+                cout << "(" + to_string(인덱스 + 1) + "/" + to_string(소스코드들.size()) + ") " + "넘어가려면 아무 키나 입력하세요.";
+                getline(cin, 소스코드);
             }
         } else if (명령 == "?") {
             cout << "y - 정답" << endl;
@@ -50,7 +55,7 @@ void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들
 CppGrader::CppGrader(ofstream &출력_스트림) : 출력_스트림(출력_스트림) {}
 
 void CppGrader::채점(const vector<string> &소스코드들, const string &정답파일, const string &출력파일명) {
-    string 명령어 = "fc  /w /n /u " + util::큰따옴표_래핑(정답파일) + " " + util::큰따옴표_래핑(출력파일명) + " > temp.txt";
+    string 명령어 = "fc  /w /n " + util::큰따옴표_래핑(정답파일) + " " + util::큰따옴표_래핑(출력파일명) + " > temp.txt";
     system(명령어.c_str());
 
     ifstream 입력_스트림("temp.txt");
