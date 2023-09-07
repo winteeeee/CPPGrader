@@ -58,6 +58,19 @@ void GraderApp::메인_복사() {
     }
 }
 
+vector<string> GraderApp::명령행_인수_로드() {
+    vector<string> 인수들;
+
+    for (const auto &엔트리 : fs::recursive_directory_iterator(fs::current_path())) {
+        string 경로 = 엔트리.path().string();
+        if (경로.find(".argv") != string::npos) {
+            인수들.push_back(경로);
+        }
+    }
+
+    return 인수들;
+}
+
 GraderApp::GraderApp(const string &채점파일명) : 출력_스트림(채점파일명) {}
 GraderApp::~GraderApp() {
     출력_스트림.close();
@@ -75,7 +88,7 @@ void GraderApp::실행() {
 
     cout << "컴파일 옵션 선택 (1 : 일반, 2 : 각각 컴파일) : ";
     cin >> 컴파일_옵션;
-    cout << "main을 넣으시겠습니까? (1 : 아니요, 2 : 예) : ";
+    cout << "main을 복사하시겠습니까? (1 : 아니요, 2 : 예) : ";
     cin >> 메인_옵션;
     if (메인_옵션 == 2) {
         메인_복사();
@@ -84,19 +97,26 @@ void GraderApp::실행() {
     vector<string> 소스코드들;
     unsigned long long 인덱스 = 0;
     auto [입력파일들, 정답파일들] = 테스트케이스_로드();
+    auto 명령행_인수들 = 명령행_인수_로드();
     auto 컴파일러 = CppCompiler(소스코드들, 출력_스트림);
     string 현재_디렉토리;
     string 현재_학생;
+    string 인수;
 
     출력_스트림 << "===================================";
     for (const auto &엔트리 : fs::recursive_directory_iterator(fs::current_path())) {
         if (엔트리.is_directory()) {
             if (!소스코드들.empty()) {
+                if (!명령행_인수들.empty()) {
+                    인수 = 명령행_인수들[인덱스];
+                }
+
                 컴파일러.컴파일(현재_디렉토리,
                                 현재_학생,
                                 입력파일들[인덱스],
                                 정답파일들[인덱스],
-                                컴파일_옵션);
+                                컴파일_옵션,
+                                인수);
                 인덱스 = (인덱스 + 1) % 입력파일들.size();
             }
 
@@ -116,11 +136,16 @@ void GraderApp::실행() {
     }
 
     if (!소스코드들.empty()) {
+        if (!명령행_인수들.empty()) {
+            인수 = 명령행_인수들[인덱스];
+        }
+
         컴파일러.컴파일(현재_디렉토리,
                         현재_학생,
                         입력파일들[인덱스],
                         정답파일들[인덱스],
-                        컴파일_옵션);
+                        컴파일_옵션,
+                        인수);
     }
     출력_스트림 << endl << "===================================";
 }

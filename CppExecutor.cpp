@@ -6,15 +6,19 @@ void CppExecutor::실행(const string &입력파일_경로,
                        const string &정답파일_경로,
                        const string &디렉토리_경로,
                        const string &출력파일명,
-                       const vector<string> &소스코드들) {
+                       const vector<string> &소스코드들,
+                       const string &명령행_인수) {
     cout << endl << "=======================================================================================" << endl;
     cout << "실행 디렉토리 : " << 디렉토리_경로 << endl << "소스코드 : ";
     for (const string& 소스코드 : 소스코드들) {
         cout << 소스코드 << " ";
     }
     cout << endl << "테스트케이스 : " << 입력파일_경로 << endl;
+    if (!명령행_인수.empty()) {
+        cout << "명령행 인수 : " << 명령행_인수 << endl;
+    }
 
-    string 명령어 = ".\\output";
+    string 명령어 = ".\\output " + util::큰따옴표_래핑(명령행_인수);
     if (입력파일_경로.find("수동") == string::npos) {
         명령어 += (" < " + util::큰따옴표_래핑(입력파일_경로) + " > " + 출력파일명);
         system(명령어.c_str());

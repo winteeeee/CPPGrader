@@ -18,5 +18,6 @@ public:
               const string &정답파일_경로,
               const string &디렉토리_경로,
               const string &출력파일명,
-              const vector<string> &소스코드들);
+              const vector<string> &소스코드들,
+              const string &명령행_인수);
 };

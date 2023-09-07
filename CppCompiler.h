@@ -25,5 +25,6 @@ public:
                 const string &학생_정보,
                 const vector<string> &입력파일들,
                 const vector<string> &정답파일들,
-                const int &옵션);
+                const int &옵션,
+                const string& 명령행_인수);
 };
