@@ -4,8 +4,8 @@
 #include <filesystem>
 #include <iostream>
 #include <windows.h>
-#include "CppCompiler.h"
-#include "util.h"
+#include "complier/CppCompiler.h"
+#include "etc/util.h"
 using namespace std;
 namespace fs = filesystem;
 

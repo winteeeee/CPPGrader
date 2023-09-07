@@ -5,14 +5,14 @@ set(CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static")
 
 add_executable(CPPGrader main.cpp
-        CppCompiler.cpp
-        CppCompiler.h
-        CppExecutor.cpp
-        CppExecutor.h
+        complier/CppCompiler.cpp
+        complier/CppCompiler.h
+        executor/CppExecutor.cpp
+        executor/CppExecutor.h
         GraderApp.cpp
         GraderApp.h
-        CppGrader.cpp
-        CppGrader.h
-        util.cpp
-        util.h
+        grader/CppGrader.cpp
+        grader/CppGrader.h
+        etc/util.cpp
+        etc/util.h
 )

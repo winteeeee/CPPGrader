@@ -5,7 +5,7 @@
 #include <vector>
 #include <cstdlib>
 #include <filesystem>
-#include "util.h"
+#include "../etc/util.h"
 using namespace std;
 namespace fs = filesystem;
 

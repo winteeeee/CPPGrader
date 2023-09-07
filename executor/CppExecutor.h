@@ -4,8 +4,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <filesystem>
-#include "CppGrader.h"
-#include "util.h"
+#include "../grader/CppGrader.h"
+#include "../etc/util.h"
 using namespace std;
 namespace fs = filesystem;
 
