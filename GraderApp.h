@@ -3,6 +3,7 @@
 #include <vector>
 #include <filesystem>
 #include <iostream>
+#include <windows.h>
 #include "CppCompiler.h"
 #include "util.h"
 using namespace std;
@@ -12,7 +13,6 @@ class GraderApp {
 private:
     ofstream 출력_스트림;
     pair<vector<vector<string>>, vector<vector<string>>> 테스트케이스_로드();
-    bool 소스코드_존재(const string& 파일);
     void 메인_복사();
 
 public:

@@ -30,22 +30,18 @@ pair<vector<vector<string>>, vector<vector<string>>> GraderApp::테스트케이�
     return {입력파일들, 정답파일들};
 }
 
-bool GraderApp::소스코드_존재(const string &파일) {
-    return 파일.find(".cpp") != string::npos || 파일.find(".h") != string::npos || 파일.find(".h++") != string::npos;
-}
-
 void GraderApp::메인_복사() {
-    string 메인_경로;
+    string 메인_이름;
     string 목표_폴더;
 
-    while (메인_경로 != "1") {
-        cout << "복사할 main의 경로를 입력해주세요(종료는 1 입력) : ";
+    while (메인_이름 != "1") {
+        cout << "복사할 main의 파일명을 입력해주세요(종료는 1 입력) : ";
         cin.ignore();
-        getline(cin, 메인_경로);
+        getline(cin, 메인_이름);
         cout << "복사 목표 폴더명을 입력해주세요(종료는 1 입력) : ";
         cin >> 목표_폴더;
 
-        if (메인_경로 != "1" && 목표_폴더 != "1") {
+        if (메인_이름 != "1" && 목표_폴더 != "1") {
             fs::path 디렉토리_경로;
 
             for (const auto &엔트리: fs::recursive_directory_iterator(fs::current_path())) {
@@ -53,10 +49,8 @@ void GraderApp::메인_복사() {
                     디렉토리_경로 = 엔트리.path();
                 } else {
                     string 파일 = 엔트리.path().filename().string();
-                    if (소스코드_존재(파일) && 디렉토리_경로.filename().string() == 목표_폴더) {
-                        fs::copy(util::큰따옴표_래핑(메인_경로),
-                                 util::큰따옴표_래핑(디렉토리_경로.string() + "\\" + 메인_경로),
-                                 fs::copy_options::overwrite_existing);
+                    if (util::소스코드_존재(파일) && 디렉토리_경로.filename().string() == 목표_폴더) {
+                        CopyFile(메인_이름.c_str(), (디렉토리_경로.string() + "/" + 메인_이름).c_str(), false);
                     }
                 }
             }
@@ -115,7 +109,7 @@ void GraderApp::실행() {
             }
         } else {
             string 파일명 = 엔트리.path().filename().string();
-            if (소스코드_존재(파일명)) {
+            if (util::소스코드_존재(파일명)) {
                 소스코드들.push_back(util::큰따옴표_래핑(파일명));
             }
         }
