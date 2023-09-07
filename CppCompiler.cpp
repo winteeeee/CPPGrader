@@ -9,7 +9,7 @@ void CppCompiler::컴파일(const string &디렉토리_경로,
                          const vector<string> &정답파일들,
                          const int &옵션,
                          const string& 명령행_인수) const {
-    cout << endl << "[채점 대상 학생 : " << 학생_정보 << "]" << endl;
+    cout << endl << "[Target Student : " << 학생_정보 << "]" << endl;
     chdir(디렉토리_경로.c_str());
 
     if (옵션 == CppCompiler::컴파일_옵션::일반) {
@@ -21,7 +21,7 @@ void CppCompiler::컴파일(const string &디렉토리_경로,
         }
         명령어 += " -o output";
 
-        cout << "컴파일 중..." << endl;
+        cout << "Compiling..." << endl;
         cout << 명령어 << endl;
         int 컴파일_결과 = system(명령어.c_str());
         if (!컴파일_결과) {
@@ -37,7 +37,7 @@ void CppCompiler::컴파일(const string &디렉토리_경로,
                 vector<string> 임시_벡터 = {소스코드};
 
                 string 명령어 = "g++ " + 소스코드 + " -o output";
-                cout << "컴파일 중..." << endl;
+                cout << "Compiling..." << endl;
                 int 컴파일_결과 = system(명령어.c_str());
                 if (!컴파일_결과) {
                     for (const auto &입력파일_경로: 입력파일들) {
@@ -49,7 +49,7 @@ void CppCompiler::컴파일(const string &디렉토리_경로,
             }
         }
     } else {
-        cout << "잘못된 옵션";
+        cout << "[Error : Wrong Option]";
     }
     소스코드들.clear();
 }

@@ -10,7 +10,7 @@ void CppGrader::코드_출력(const string &경로) const {
             cout << 줄 << endl;
         }
     } else {
-        cout << "코드 출력 실패" << endl;
+        cout << "[Error : Code print failed]" << endl;
     }
     cout << '\n';
     입력_스트림.close();
@@ -21,7 +21,7 @@ void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들
     bool 탈출_불가 = true;
 
     while (탈출_불가) {
-        cout << endl << "채점 [y, n, c, ?] : ";
+        cout << endl << "Grade [y, n, c, ?] : ";
         cin >> 명령;
 
         if (명령 == "y") {
@@ -38,16 +38,16 @@ void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들
                 소스코드.replace(소스코드.length() - 1, 1, "");
                 코드_출력(소스코드);
 
-                cout << "(" + to_string(인덱스 + 1) + "/" + to_string(소스코드들.size()) + ") " + "넘어가려면 아무 키나 입력하세요.";
+                cout << "(" + to_string(인덱스 + 1) + "/" + to_string(소스코드들.size()) + ") " + "Enter any input to next";
                 getline(cin, 소스코드);
             }
         } else if (명령 == "?") {
-            cout << "y - 정답" << endl;
-            cout << "n - 오답" << endl;
-            cout << "c - 코드 보기" << endl;
-            cout << "? - 도움말 표시" << endl;
+            cout << "y - Correct" << endl;
+            cout << "n - Wrong" << endl;
+            cout << "c - Code print" << endl;
+            cout << "? - help print" << endl;
         } else {
-            cout << "잘못된 명령어" << endl;
+            cout << "[Error : Wrong Command]" << endl;
         }
     }
 }
@@ -71,7 +71,7 @@ void CppGrader::채점(const vector<string> &소스코드들, const string &정�
             }
 
             if (줄.find("FC: no differences encountered") != string::npos) {
-                cout << "********* 정답 파일과 동일 *********" << endl << endl;
+                cout << "********* Same as the .out file *********" << endl << endl;
                 출력_스트림 << "O ";
                 정답 = true;
                 break;
@@ -89,7 +89,7 @@ void CppGrader::채점(const vector<string> &소스코드들, const string &정�
             채점_프롬프트_출력(소스코드들);
         }
     } else {
-        cout << "FC 명령어가 정상적으로 실행되지 않음" << endl;
+        cout << "[Error : FC command do not execute normally]" << endl;
     }
     입력_스트림.close();
     fs::remove("temp.txt");

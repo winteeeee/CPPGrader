@@ -35,10 +35,10 @@ void GraderApp::메인_복사() const {
     string 목표_폴더;
 
     while (메인_이름 != "1" && 목표_폴더 != "1") {
-        cout << "복사할 main의 파일명을 입력해주세요(종료는 1 입력) : ";
+        cout << "Please enter the name of the main file to copy (enter 1 for exit) : ";
         cin.ignore();
         getline(cin, 메인_이름);
-        cout << "복사 목표 폴더명을 입력해주세요(종료는 1 입력) : ";
+        cout << "Please enter the path of the target folder (enter 1 for exit) : ";
         cin >> 목표_폴더;
 
         if (메인_이름 != "1" && 목표_폴더 != "1") {
@@ -86,9 +86,9 @@ void GraderApp::실행() {
     cout << "| \\__/\\  |_|    |_|   | |_\\ \\| |   | (_| || (_| ||  __/| |   |_|" << endl;
     cout << " \\____/                \\____/|_|    \\__,_| \\__,_| \\___||_|   (_)" << endl;
 
-    cout << "컴파일 옵션 선택 (1 : 일반, 2 : 각각 컴파일) : ";
+    cout << "Select compilation options (1 : Default, 2 : Compile each) : ";
     cin >> 컴파일_옵션;
-    cout << "main을 복사하시겠습니까? (1 : 아니요, 2 : 예) : ";
+    cout << "Do you want to copy the main? (1 : No, 2 : Yes) : ";
     cin >> 메인_옵션;
     if (메인_옵션 == 2) {
         메인_복사();
