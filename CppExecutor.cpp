@@ -7,7 +7,7 @@ void CppExecutor::실행(const string &입력파일_경로,
                        const string &디렉토리_경로,
                        const string &출력파일명,
                        const vector<string> &소스코드들,
-                       const string &명령행_인수) {
+                       const string &명령행_인수) const {
     cout << endl << "=======================================================================================" << endl;
     cout << "실행 디렉토리 : " << 디렉토리_경로 << endl << "소스코드 : ";
     for (const string& 소스코드 : 소스코드들) {

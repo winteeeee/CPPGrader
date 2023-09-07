@@ -1,6 +1,6 @@
 #include "CppGrader.h"
 
-void CppGrader::코드_출력(const string &경로) {
+void CppGrader::코드_출력(const string &경로) const {
     ifstream 입력_스트림(경로);
     cout << endl << " ===== " << 경로 << " ===== " << endl;
     if (입력_스트림.is_open()) {
@@ -16,7 +16,7 @@ void CppGrader::코드_출력(const string &경로) {
     입력_스트림.close();
 }
 
-void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들) {
+void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들) const {
     string 명령;
     bool 탈출_불가 = true;
 
@@ -54,7 +54,7 @@ void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들
 
 CppGrader::CppGrader(ofstream &출력_스트림) : 출력_스트림(출력_스트림) {}
 
-void CppGrader::채점(const vector<string> &소스코드들, const string &정답파일, const string &출력파일명) {
+void CppGrader::채점(const vector<string> &소스코드들, const string &정답파일, const string &출력파일명) const {
     string 명령어 = "fc  /w /n " + util::큰따옴표_래핑(정답파일) + " " + util::큰따옴표_래핑(출력파일명) + " > temp.txt";
     system(명령어.c_str());
 

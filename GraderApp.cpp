@@ -1,6 +1,6 @@
 #include "GraderApp.h"
 
-pair<vector<vector<string>>, vector<vector<string>>> GraderApp::테스트케이스_로드() {
+pair<vector<vector<string>>, vector<vector<string>>> GraderApp::테스트케이스_로드() const {
     vector<vector<string>> 입력파일들;
     vector<vector<string>> 정답파일들;
 
@@ -30,11 +30,11 @@ pair<vector<vector<string>>, vector<vector<string>>> GraderApp::테스트케이�
     return {입력파일들, 정답파일들};
 }
 
-void GraderApp::메인_복사() {
+void GraderApp::메인_복사() const {
     string 메인_이름;
     string 목표_폴더;
 
-    while (메인_이름 != "1") {
+    while (메인_이름 != "1" && 목표_폴더 != "1") {
         cout << "복사할 main의 파일명을 입력해주세요(종료는 1 입력) : ";
         cin.ignore();
         getline(cin, 메인_이름);
@@ -58,7 +58,7 @@ void GraderApp::메인_복사() {
     }
 }
 
-vector<string> GraderApp::명령행_인수_로드() {
+vector<string> GraderApp::명령행_인수_로드() const {
     vector<string> 인수들;
 
     for (const auto &엔트리 : fs::recursive_directory_iterator(fs::current_path())) {

@@ -12,9 +12,9 @@ namespace fs = filesystem;
 class GraderApp {
 private:
     ofstream 출력_스트림;
-    pair<vector<vector<string>>, vector<vector<string>>> 테스트케이스_로드();
-    void 메인_복사();
-    vector<string> 명령행_인수_로드();
+    pair<vector<vector<string>>, vector<vector<string>>> 테스트케이스_로드() const;
+    void 메인_복사() const;
+    vector<string> 명령행_인수_로드() const;
 
 public:
     GraderApp(const string& 채점파일명);

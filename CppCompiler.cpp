@@ -8,7 +8,7 @@ void CppCompiler::컴파일(const string &디렉토리_경로,
                          const vector<string> &입력파일들,
                          const vector<string> &정답파일들,
                          const int &옵션,
-                         const string& 명령행_인수) {
+                         const string& 명령행_인수) const {
     cout << endl << "[채점 대상 학생 : " << 학생_정보 << "]" << endl;
     chdir(디렉토리_경로.c_str());
 
