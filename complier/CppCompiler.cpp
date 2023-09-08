@@ -9,7 +9,9 @@ void CppCompiler::컴파일(const string &디렉토리_경로,
                          const vector<string> &정답파일들,
                          const int &옵션,
                          const string& 명령행_인수) const {
-    cout << endl << "[Target Student : " << 학생_정보 << "]" << endl;
+    cout << endl;
+    util::느리게_출력("[Target Student : " + 학생_정보 + "]", 50);
+    cout << endl;
     chdir(디렉토리_경로.c_str());
 
     if (옵션 == CppCompiler::컴파일_옵션::일반) {
@@ -37,7 +39,8 @@ void CppCompiler::컴파일(const string &디렉토리_경로,
                 vector<string> 임시_벡터 = {소스코드};
 
                 string 명령어 = "g++ " + 소스코드 + " -o output";
-                cout << "Compiling..." << endl;
+                util::느리게_출력("Compiling...", 50);
+                cout << endl;
                 int 컴파일_결과 = system(명령어.c_str());
                 if (!컴파일_결과) {
                     for (const auto &입력파일_경로: 입력파일들) {

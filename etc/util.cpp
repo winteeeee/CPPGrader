@@ -25,3 +25,26 @@ string util::슬래시_변환(const std::string &문자열) {
 
     return 결과;
 }
+
+void util::방향키_제어(int 입력, int 인덱스_최댓값, int &인덱스, bool &종료_플래그) {
+    if (입력 == 방향키_위) {
+        인덱스--;
+        if (인덱스 < 0) {
+            인덱스 = 인덱스_최댓값;
+        }
+    } else if (입력 == 방향키_아래) {
+        인덱스++;
+        if (인덱스 > 인덱스_최댓값 - 1) {
+            인덱스 = 0;
+        }
+    } else if (입력 == 엔터) {
+        종료_플래그 = true;
+    }
+}
+
+void util::느리게_출력(const string &문자열, int 딜레이) {
+    for (const auto &문자 : 문자열) {
+        cout << 문자 << flush;
+        Sleep(딜레이);
+    }
+}

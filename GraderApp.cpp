@@ -71,25 +71,78 @@ vector<string> GraderApp::명령행_인수_로드() const {
     return 인수들;
 }
 
-GraderApp::GraderApp(const string &채점파일명) : 출력_스트림(채점파일명) {}
-GraderApp::~GraderApp() {
-    출력_스트림.close();
-}
-
-void GraderApp::실행() {
-    int 컴파일_옵션;
-    int 메인_옵션;
+void GraderApp::아스키_아트_출력() const {
     cout << " _____                 _____                   _              _ " << endl;
     cout << "/  __ \\   _      _    |  __ \\                 | |            | |" << endl;
     cout << "| /  \\/ _| |_  _| |_  | |  \\/ _ __   __ _   __| |  ___  _ __ | |" << endl;
     cout << "| |    |_   _||_   _| | | __ | '__| / _` | / _` | / _ \\| '__|| |" << endl;
     cout << "| \\__/\\  |_|    |_|   | |_\\ \\| |   | (_| || (_| ||  __/| |   |_|" << endl;
     cout << " \\____/                \\____/|_|    \\__,_| \\__,_| \\___||_|   (_)" << endl;
+}
 
-    cout << "Select compilation options (1 : Default, 2 : Compile each) : ";
-    cin >> 컴파일_옵션;
-    cout << "Do you want to copy the main? (1 : No, 2 : Yes) : ";
-    cin >> 메인_옵션;
+int GraderApp::컴파일_옵션_선택() const {
+    //TODO 콘솔 출력파트 개선 https://geundung.dev/15
+    int 옵션_인덱스 = 0;
+    bool 선택됨 = false;
+
+    while (!선택됨) {
+        system("cls");
+        아스키_아트_출력();
+        cout << "Select compilation options" << endl;
+        for (int i = 0; i < 2; i++) {
+            if (i == 옵션_인덱스) {
+                cout << " -> ";
+            }
+
+            if (i == 0) {
+                cout << "Default" << endl;
+            } else if (i == 1) {
+                cout << "Compile each" << endl;
+            }
+        }
+
+        int 입력 = _getch();
+        util::방향키_제어(입력, 2, 옵션_인덱스, 선택됨);
+    }
+
+    return (옵션_인덱스 + 1);
+}
+
+int GraderApp::메인_옵션_선택() const {
+    int 옵션_인덱스 = 0;
+    bool 선택됨 = false;
+
+    while (!선택됨) {
+        system("cls");
+        아스키_아트_출력();
+        cout << "Do you want to copy the main?" << endl;
+        for (int i = 0; i < 2; i++) {
+            if (i == 옵션_인덱스) {
+                cout << " -> ";
+            }
+
+            if (i == 0) {
+                cout << "No" << endl;
+            } else if (i == 1) {
+                cout << "Yes" << endl;
+            }
+        }
+
+        int 입력 = _getch();
+        util::방향키_제어(입력, 2, 옵션_인덱스, 선택됨);
+    }
+
+    return (옵션_인덱스 + 1);
+}
+
+GraderApp::GraderApp(const string &채점파일명) : 출력_스트림(채점파일명) {}
+GraderApp::~GraderApp() {
+    출력_스트림.close();
+}
+
+void GraderApp::실행() {
+    int 컴파일_옵션 = 컴파일_옵션_선택();
+    int 메인_옵션 = 메인_옵션_선택();
     if (메인_옵션 == 2) {
         메인_복사();
     }
