@@ -116,7 +116,6 @@ void GraderApp::실행() {
     unsigned long long 인덱스 = 0;
     auto [입력파일들, 정답파일들] = 테스트케이스_로드();
     auto 명령행_인수들 = 명령행_인수_로드();
-    //TODO 명령행 인수가 1개만 들어가는 중
     auto 컴파일러 = CppCompiler(소스코드들, 출력_스트림);
     string 현재_디렉토리;
     string 현재_학생;
