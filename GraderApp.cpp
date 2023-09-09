@@ -89,12 +89,11 @@ int GraderApp::컴파일_옵션_선택() const {
 }
 
 int GraderApp::메인_옵션_선택() const {
-    vector<string> 출력_문자열 = {"\n",
-                             "Do you want to copy the main?",
+    vector<string> 출력_문자열 = {"Do you want to copy the main?",
                              "1. No",
                              "2. Yes"};
 
-    return util::키보드_제어_콘솔_출력(출력_문자열, 2);
+    return util::키보드_제어_콘솔_출력(출력_문자열, 1);
 }
 
 GraderApp::GraderApp(const string &채점파일명) : 출력_스트림(채점파일명) {}
@@ -124,16 +123,12 @@ void GraderApp::실행() {
     for (const auto &엔트리 : fs::recursive_directory_iterator(fs::current_path())) {
         if (엔트리.is_directory()) {
             if (!소스코드들.empty()) {
-                if (!명령행_인수들.empty()) {
-                    인수 = 명령행_인수들[인덱스];
-                }
-
                 컴파일러.컴파일(현재_디렉토리,
                                 현재_학생,
                                 입력파일들[인덱스],
                                 정답파일들[인덱스],
                                 컴파일_옵션,
-                                인수);
+                                명령행_인수들);
                 인덱스 = (인덱스 + 1) % 입력파일들.size();
             }
 
@@ -153,16 +148,12 @@ void GraderApp::실행() {
     }
 
     if (!소스코드들.empty()) {
-        if (!명령행_인수들.empty()) {
-            인수 = 명령행_인수들[인덱스];
-        }
-
         컴파일러.컴파일(현재_디렉토리,
                         현재_학생,
                         입력파일들[인덱스],
                         정답파일들[인덱스],
                         컴파일_옵션,
-                        인수);
+                        명령행_인수들);
     }
     출력_스트림 << endl << "===================================";
     system("pause");

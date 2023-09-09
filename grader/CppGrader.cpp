@@ -78,7 +78,7 @@ void CppGrader::채점(const vector<string> &소스코드들, const string &정�
             }
 
             if (!첫줄.empty()) {
-                cout << 첫줄 << endl;
+                util::느리게_출력(첫줄 + "\n");
                 첫줄 = "";
             }
 

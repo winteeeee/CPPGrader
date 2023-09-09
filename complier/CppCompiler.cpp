@@ -8,7 +8,7 @@ void CppCompiler::컴파일(const string &디렉토리_경로,
                          const vector<string> &입력파일들,
                          const vector<string> &정답파일들,
                          const int &옵션,
-                         const string& 명령행_인수) const {
+                         const vector<string>& 명령행_인수들) const {
     util::느리게_출력("\n[Target Student : " + 학생_정보 + "]\n");
     chdir(디렉토리_경로.c_str());
 
@@ -24,8 +24,9 @@ void CppCompiler::컴파일(const string &디렉토리_경로,
         util::느리게_출력("Compiling...\n");
         int 컴파일_결과 = system(명령어.c_str());
         if (!컴파일_결과) {
-            for (const auto& 입력파일_경로 : 입력파일들) {
-                const auto& 정답파일_경로 = 정답파일들[&입력파일_경로 - &입력파일들[0]];
+            for (const auto &입력파일_경로 : 입력파일들) {
+                const auto &정답파일_경로 = 정답파일들[&입력파일_경로 - &입력파일들[0]];
+                const auto &명령행_인수 = 명령행_인수들[&입력파일_경로 - &입력파일들[0]];
                 실행기.실행(입력파일_경로, 정답파일_경로, 디렉토리_경로, "output.txt", 소스코드들, 명령행_인수);
             }
             fs::remove("output.exe");
@@ -42,6 +43,7 @@ void CppCompiler::컴파일(const string &디렉토리_경로,
                 if (!컴파일_결과) {
                     for (const auto &입력파일_경로: 입력파일들) {
                         const auto &정답파일_경로 = 정답파일들[&입력파일_경로 - &입력파일들[0]];
+                        const auto &명령행_인수 = 명령행_인수들[&입력파일_경로 - &입력파일들[0]];
                         실행기.실행(입력파일_경로, 정답파일_경로, 디렉토리_경로, "output.txt", 임시_벡터, 명령행_인수);
                     }
                     fs::remove("output.exe");
