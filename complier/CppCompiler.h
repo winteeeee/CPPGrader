@@ -15,8 +15,8 @@ private:
     vector<string> &소스코드들;
     CppExecutor 실행기;
     enum 컴파일_옵션 {
-        일반 = 1,
-        각각_컴파일 = 2,
+        일반 = 0,
+        각각_컴파일 = 1,
     };
 
 public:

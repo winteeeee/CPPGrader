@@ -2,7 +2,7 @@
 
 void CppGrader::코드_출력(const string &경로) const {
     ifstream 입력_스트림(경로);
-    cout << endl << " ===== " << 경로 << " ===== " << endl;
+    util::느리게_출력("\n ===== " + 경로 + " ===== \n");
     if (입력_스트림.is_open()) {
         string 줄;
 
@@ -10,7 +10,7 @@ void CppGrader::코드_출력(const string &경로) const {
             cout << 줄 << endl;
         }
     } else {
-        cout << "[Error : Code print failed]" << endl;
+        util::느리게_출력("[Error : Code print failed]\n");
     }
     cout << '\n';
     입력_스트림.close();
@@ -21,7 +21,7 @@ void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들
     bool 탈출_불가 = true;
 
     while (탈출_불가) {
-        cout << endl << "Grade [y, n, c, ?] : ";
+        util::느리게_출력("\nGrade [y, n, c, ?] : ");
         cin >> 명령;
 
         if (명령 == "y") {
@@ -38,16 +38,16 @@ void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들
                 소스코드.replace(소스코드.length() - 1, 1, "");
                 코드_출력(소스코드);
 
-                cout << "(" + to_string(인덱스 + 1) + "/" + to_string(소스코드들.size()) + ") " + "Enter any input to next";
+                util::느리게_출력("(" + to_string(인덱스 + 1) + "/" + to_string(소스코드들.size()) + ") " + "Enter any input to next");
                 getline(cin, 소스코드);
             }
         } else if (명령 == "?") {
-            cout << "y - Correct" << endl;
-            cout << "n - Wrong" << endl;
-            cout << "c - Code print" << endl;
-            cout << "? - help print" << endl;
+            util::느리게_출력("y - Correct\n");
+            util::느리게_출력("n - Wrong\n");
+            util::느리게_출력("c - Code print\n");
+            util::느리게_출력("? - help print\n");
         } else {
-            cout << "[Error : Wrong Command]" << endl;
+            util::느리게_출력("[Error : Wrong Command]\n");
         }
     }
 }
@@ -71,7 +71,7 @@ void CppGrader::채점(const vector<string> &소스코드들, const string &정�
             }
 
             if (줄.find("FC: no differences encountered") != string::npos) {
-                cout << "********* Same as the .out file *********" << endl << endl;
+                util::느리게_출력("********* Same as the .out file *********\n\n");
                 출력_스트림 << "O ";
                 정답 = true;
                 break;
@@ -89,7 +89,7 @@ void CppGrader::채점(const vector<string> &소스코드들, const string &정�
             채점_프롬프트_출력(소스코드들);
         }
     } else {
-        cout << "[Error : FC command do not execute normally]" << endl;
+        util::느리게_출력("[Error : FC command do not execute normally]\n");
     }
     입력_스트림.close();
     fs::remove("temp.txt");

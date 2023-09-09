@@ -81,58 +81,20 @@ void GraderApp::아스키_아트_출력() const {
 }
 
 int GraderApp::컴파일_옵션_선택() const {
-    //TODO 콘솔 출력파트 개선 https://geundung.dev/15
-    int 옵션_인덱스 = 0;
-    bool 선택됨 = false;
+    vector<string> 출력_문자열 = {"Select compilation options",
+                                  "1. Default",
+                                  "2. Compile each"};
 
-    while (!선택됨) {
-        system("cls");
-        아스키_아트_출력();
-        cout << "Select compilation options" << endl;
-        for (int i = 0; i < 2; i++) {
-            if (i == 옵션_인덱스) {
-                cout << " -> ";
-            }
-
-            if (i == 0) {
-                cout << "Default" << endl;
-            } else if (i == 1) {
-                cout << "Compile each" << endl;
-            }
-        }
-
-        int 입력 = _getch();
-        util::방향키_제어(입력, 2, 옵션_인덱스, 선택됨);
-    }
-
-    return (옵션_인덱스 + 1);
+    return util::키보드_제어_콘솔_출력(출력_문자열, 1);
 }
 
 int GraderApp::메인_옵션_선택() const {
-    int 옵션_인덱스 = 0;
-    bool 선택됨 = false;
+    vector<string> 출력_문자열 = {"\n",
+                             "Do you want to copy the main?",
+                             "1. No",
+                             "2. Yes"};
 
-    while (!선택됨) {
-        system("cls");
-        아스키_아트_출력();
-        cout << "Do you want to copy the main?" << endl;
-        for (int i = 0; i < 2; i++) {
-            if (i == 옵션_인덱스) {
-                cout << " -> ";
-            }
-
-            if (i == 0) {
-                cout << "No" << endl;
-            } else if (i == 1) {
-                cout << "Yes" << endl;
-            }
-        }
-
-        int 입력 = _getch();
-        util::방향키_제어(입력, 2, 옵션_인덱스, 선택됨);
-    }
-
-    return (옵션_인덱스 + 1);
+    return util::키보드_제어_콘솔_출력(출력_문자열, 2);
 }
 
 GraderApp::GraderApp(const string &채점파일명) : 출력_스트림(채점파일명) {}
@@ -141,9 +103,10 @@ GraderApp::~GraderApp() {
 }
 
 void GraderApp::실행() {
+    아스키_아트_출력();
     int 컴파일_옵션 = 컴파일_옵션_선택();
     int 메인_옵션 = 메인_옵션_선택();
-    if (메인_옵션 == 2) {
+    if (메인_옵션 == 1) {
         메인_복사();
     }
 
@@ -151,6 +114,7 @@ void GraderApp::실행() {
     unsigned long long 인덱스 = 0;
     auto [입력파일들, 정답파일들] = 테스트케이스_로드();
     auto 명령행_인수들 = 명령행_인수_로드();
+    //TODO 명령행 인수가 1개만 들어가는 중
     auto 컴파일러 = CppCompiler(소스코드들, 출력_스트림);
     string 현재_디렉토리;
     string 현재_학생;
@@ -201,4 +165,5 @@ void GraderApp::실행() {
                         인수);
     }
     출력_스트림 << endl << "===================================";
+    system("pause");
 }
