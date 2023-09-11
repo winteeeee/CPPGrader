@@ -9,7 +9,10 @@ string util::큰따옴표_래핑(const std::string &경로) {
 }
 
 bool util::소스코드_존재(const std::string &파일) {
-    return 파일.find(".cpp") != string::npos || 파일.find(".h") != string::npos || 파일.find(".h++") != string::npos;
+    return 파일.find(".cpp") != string::npos ||
+           파일.find(".h") != string::npos ||
+           파일.find(".h++") != string::npos ||
+           파일.find(".hpp") != string::npos;
 }
 
 string util::슬래시_변환(const std::string &문자열) {
@@ -68,4 +71,31 @@ void util::느리게_출력(const string &문자열, int 딜레이) {
         cout << 문자 << flush;
         Sleep(딜레이);
     }
+}
+
+pair<string, string> util::디렉토리_파일_경로_분리(const string &절대_경로) {
+    string 디렉토리_경로;
+    string 파일명;
+    bool 파일명_추출_중 = true;
+
+    for (int 인덱스 = 절대_경로.length(); 인덱스 >= 0; 인덱스--) {
+        if (파일명_추출_중) {
+            if (절대_경로[인덱스] == '/' || 절대_경로[인덱스] == '\\') {
+                파일명_추출_중 = false;
+            } else {
+                파일명 += 절대_경로[인덱스];
+            }
+        } else {
+            디렉토리_경로 += 절대_경로[인덱스];
+        }
+    }
+
+    reverse(디렉토리_경로.begin(), 디렉토리_경로.end());
+    reverse(파일명.begin(), 파일명.end());
+    return {디렉토리_경로, 파일명};
+}
+
+void util::압축_해제(const string &디렉토리_경로, const string &파일명) {
+    chdir(디렉토리_경로.c_str());
+    system(string("unzip " + 큰따옴표_래핑(파일명)).c_str());
 }

@@ -96,6 +96,20 @@ int GraderApp::메인_옵션_선택() const {
     return util::키보드_제어_콘솔_출력(출력_문자열, 1);
 }
 
+void GraderApp::압축_해제() const {
+    string 원래_경로 = fs::current_path().string();
+
+    for (const auto &엔트리 : fs::recursive_directory_iterator(fs::current_path())) {
+        const auto &경로 = 엔트리.path().string();
+        if (경로.find(".zip") != string::npos) {
+            auto [디렉토리_경로, 파일명] = util::디렉토리_파일_경로_분리(경로);
+            util::압축_해제(디렉토리_경로, 파일명);
+        }
+    }
+
+    cout << 원래_경로;
+}
+
 GraderApp::GraderApp(const string &채점파일명) : 출력_스트림(채점파일명) {}
 GraderApp::~GraderApp() {
     출력_스트림.close();
@@ -114,12 +128,14 @@ void GraderApp::실행() {
 
     vector<string> 소스코드들;
     unsigned long long 인덱스 = 0;
-    auto [입력파일들, 정답파일들] = 테스트케이스_로드();
-    auto 명령행_인수들 = 명령행_인수_로드();
-    auto 컴파일러 = CppCompiler(소스코드들, 출력_스트림);
     string 현재_디렉토리;
     string 현재_학생;
     string 인수;
+
+    압축_해제();
+    auto [입력파일들, 정답파일들] = 테스트케이스_로드();
+    auto 명령행_인수들 = 명령행_인수_로드();
+    auto 컴파일러 = CppCompiler(소스코드들, 출력_스트림);
 
     출력_스트림 << "===================================";
     for (const auto &엔트리 : fs::recursive_directory_iterator(fs::current_path())) {
