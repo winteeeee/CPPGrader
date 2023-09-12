@@ -66,10 +66,10 @@ void util::방향키_제어(int 입력, int 인덱스_최댓값, int &인덱스,
     }
 }
 
-void util::느리게_출력(const string &문자열, int 딜레이) {
+void util::느리게_출력(const string &문자열, double 딜레이) {
     for (const auto &문자 : 문자열) {
         cout << 문자 << flush;
-        Sleep(딜레이);
+        sleep(딜레이 / 1000);
     }
 }
 
