@@ -1,12 +1,12 @@
 #include "GraderApp.h"
 
-vector<TestCase> GraderApp::테스트케이스_로드() const {
-    string 원래_경로 = fs::current_path().string();
-    vector<TestCase> 테스트케이스들;
+std::vector<TestCase> GraderApp::테스트케이스_로드() const {
+    std::string 원래_경로 = fs::current_path().string();
+    std::vector<TestCase> 테스트케이스들;
 
-    vector<string> 입력파일;
-    vector<string> 정답파일;
-    vector<string> 명령행인수;
+    std::vector<std::string> 입력파일;
+    std::vector<std::string> 정답파일;
+    std::vector<std::string> 명령행인수;
     for (const auto &엔트리 : fs::recursive_directory_iterator(fs::current_path())) {
         if (엔트리.is_directory() && !입력파일.empty()) {
             테스트케이스들.emplace_back(입력파일, 정답파일, 명령행인수);
@@ -15,12 +15,12 @@ vector<TestCase> GraderApp::테스트케이스_로드() const {
             명령행인수.clear();
         }
 
-        string 경로 = 엔트리.path().string();
-        if (경로.find(".in") != string::npos) {
+        std::string 경로 = 엔트리.path().string();
+        if (경로.find(".in") != std::string::npos) {
             입력파일.push_back(경로);
-        } else if (경로.find(".out") != string::npos) {
+        } else if (경로.find(".out") != std::string::npos) {
             정답파일.push_back(경로);
-        } else if (경로.find(".argv") != string::npos) {
+        } else if (경로.find(".argv") != std::string::npos) {
             명령행인수.push_back(경로);
         }
     }
@@ -34,15 +34,15 @@ vector<TestCase> GraderApp::테스트케이스_로드() const {
 }
 
 void GraderApp::메인_복사() const {
-    string 메인_이름;
-    string 목표_폴더;
+    std::string 메인_이름;
+    std::string 목표_폴더;
 
     while (메인_이름 != "1" && 목표_폴더 != "1") {
-        cout << "Please enter the name of the main file to copy (enter 1 for exit) : ";
-        cin.ignore();
-        getline(cin, 메인_이름);
-        cout << "Please enter the path of the target folder (enter 1 for exit) : ";
-        cin >> 목표_폴더;
+        std::cout << "Please enter the name of the main file to copy (enter 1 for exit) : ";
+        std::cin.ignore();
+        getline(std::cin, 메인_이름);
+        std::cout << "Please enter the path of the target folder (enter 1 for exit) : ";
+        std::cin >> 목표_폴더;
 
         if (메인_이름 != "1" && 목표_폴더 != "1") {
             fs::path 디렉토리_경로;
@@ -51,7 +51,7 @@ void GraderApp::메인_복사() const {
                 if (엔트리.is_directory()) {
                     디렉토리_경로 = 엔트리.path();
                 } else {
-                    string 파일 = 엔트리.path().filename().string();
+                    std::string 파일 = 엔트리.path().filename().string();
                     if (util::소스코드_존재(파일) && 디렉토리_경로.filename().string() == 목표_폴더) {
                         CopyFile(메인_이름.c_str(), (디렉토리_경로.string() + "/" + 메인_이름).c_str(), false);
                     }
@@ -62,16 +62,16 @@ void GraderApp::메인_복사() const {
 }
 
 void GraderApp::아스키_아트_출력() const {
-    cout << " _____                 _____                   _              _ " << endl;
-    cout << "/  __ \\   _      _    |  __ \\                 | |            | |" << endl;
-    cout << "| /  \\/ _| |_  _| |_  | |  \\/ _ __   __ _   __| |  ___  _ __ | |" << endl;
-    cout << "| |    |_   _||_   _| | | __ | '__| / _` | / _` | / _ \\| '__|| |" << endl;
-    cout << "| \\__/\\  |_|    |_|   | |_\\ \\| |   | (_| || (_| ||  __/| |   |_|" << endl;
-    cout << " \\____/                \\____/|_|    \\__,_| \\__,_| \\___||_|   (_)" << endl;
+    std::cout << " _____                 _____                   _              _ " << std::endl;
+    std::cout << "/  __ \\   _      _    |  __ \\                 | |            | |" << std::endl;
+    std::cout << "| /  \\/ _| |_  _| |_  | |  \\/ _ __   __ _   __| |  ___  _ __ | |" << std::endl;
+    std::cout << "| |    |_   _||_   _| | | __ | '__| / _` | / _` | / _ \\| '__|| |" << std::endl;
+    std::cout << "| \\__/\\  |_|    |_|   | |_\\ \\| |   | (_| || (_| ||  __/| |   |_|" << std::endl;
+    std::cout << " \\____/                \\____/|_|    \\__,_| \\__,_| \\___||_|   (_)" << std::endl;
 }
 
 int GraderApp::컴파일_옵션_선택() const {
-    vector<string> 출력_문자열 = {"Select compilation options",
+    std::vector<std::string> 출력_문자열 = {"Select compilation options",
                                   "1. Default",
                                   "2. Compile each"};
 
@@ -79,7 +79,7 @@ int GraderApp::컴파일_옵션_선택() const {
 }
 
 int GraderApp::메인_옵션_선택() const {
-    vector<string> 출력_문자열 = {"Do you want to copy the main?",
+    std::vector<std::string> 출력_문자열 = {"Do you want to copy the main?",
                              "1. No",
                              "2. Yes"};
 
@@ -87,11 +87,11 @@ int GraderApp::메인_옵션_선택() const {
 }
 
 void GraderApp::압축_해제() const {
-    string 원래_경로 = fs::current_path().string();
+    std::string 원래_경로 = fs::current_path().string();
 
     for (const auto &엔트리 : fs::recursive_directory_iterator(fs::current_path())) {
         const auto &경로 = 엔트리.path().string();
-        if (경로.find(".zip") != string::npos) {
+        if (경로.find(".zip") != std::string::npos) {
             auto [디렉토리_경로, 파일명] = util::디렉토리_파일_경로_분리(경로);
             util::압축_해제(디렉토리_경로, 파일명);
         }
@@ -100,27 +100,27 @@ void GraderApp::압축_해제() const {
     chdir(원래_경로.c_str());
 }
 
-GraderApp::GraderApp(const string &채점파일명) : 출력_스트림(채점파일명) {}
+GraderApp::GraderApp(const std::string &채점파일명) : 출력_스트림(채점파일명) {}
 GraderApp::~GraderApp() {
     출력_스트림.close();
 }
 
 void GraderApp::실행() {
     아스키_아트_출력();
-    cout << "\n=======================================================================================\n";
+    std::cout << "\n=======================================================================================\n";
     int 컴파일_옵션 = 컴파일_옵션_선택();
-    cout << "=======================================================================================\n";
+    std::cout << "=======================================================================================\n";
     int 메인_옵션 = 메인_옵션_선택();
-    cout << "=======================================================================================\n";
+    std::cout << "=======================================================================================\n";
     if (메인_옵션 == 1) {
         메인_복사();
     }
 
-    vector<string> 소스코드들;
+    std::vector<std::string> 소스코드들;
     unsigned long long 인덱스 = 0;
-    string 현재_디렉토리;
-    string 현재_학생;
-    string 인수;
+    std::string 현재_디렉토리;
+    std::string 현재_학생;
+    std::string 인수;
 
     압축_해제();
     auto 테스트케이스들 = 테스트케이스_로드();
@@ -141,15 +141,15 @@ void GraderApp::실행() {
             }
 
             현재_디렉토리 = 엔트리.path().string();
-            string 디렉토리명 = 엔트리.path().filename().string();
+            std::string 디렉토리명 = 엔트리.path().filename().string();
 
-            if (디렉토리명.find('_') != string::npos) {
-                출력_스트림 << endl << '[' << 디렉토리명 << ']' << endl;
+            if (디렉토리명.find('_') != std::string::npos) {
+                출력_스트림 << std::endl << '[' << 디렉토리명 << ']' << std::endl;
                 현재_학생 = 디렉토리명;
                 인덱스 = 0;
             }
         } else {
-            string 파일명 = 엔트리.path().filename().string();
+            std::string 파일명 = 엔트리.path().filename().string();
             if (util::소스코드_존재(파일명)) {
                 소스코드들.push_back(util::큰따옴표_래핑(파일명));
             }
@@ -165,6 +165,6 @@ void GraderApp::실행() {
                         인덱스);
         소스코드들.clear();
     }
-    출력_스트림 << endl << "===================================";
+    출력_스트림 << std::endl << "===================================";
     system("pause");
 }
