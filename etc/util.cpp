@@ -10,24 +10,10 @@ string util::큰따옴표_래핑(const string &경로) {
 }
 
 bool util::소스코드_존재(const string &파일) {
-    return 파일.find(".cpp") != string::npos ||
+    return (파일.find(".cpp") != string::npos ||
            파일.find(".h") != string::npos ||
            파일.find(".h++") != string::npos ||
-           파일.find(".hpp") != string::npos;
-}
-
-string util::슬래시_변환(const string &문자열) {
-    string 결과;
-
-    for (auto 문자: 문자열) {
-        if (문자 == '\\') {
-            문자 = '/';
-        }
-
-        결과.push_back(문자);
-    }
-
-    return 결과;
+           파일.find(".hpp") != string::npos) && (파일.find("._") == string::npos);
 }
 
 int util::키보드_제어_콘솔_출력(vector<string> &출력_문자열, int 옵션_시작_인덱스) {
@@ -99,4 +85,17 @@ pair<string, string> util::디렉토리_파일_경로_분리(const string &절�
 void util::압축_해제(const string &디렉토리_경로, const string &파일명) {
     chdir(디렉토리_경로.c_str());
     system(string("unzip " + 큰따옴표_래핑(파일명)).c_str());
+}
+
+void util::아스키_아트_출력() {
+    cout << " _____                 _____                   _              _ " << endl;
+    cout << "/  __ \\   _      _    |  __ \\                 | |            | |" << endl;
+    cout << "| /  \\/ _| |_  _| |_  | |  \\/ _ __   __ _   __| |  ___  _ __ | |" << endl;
+    cout << "| |    |_   _||_   _| | | __ | '__| / _` | / _` | / _ \\| '__|| |" << endl;
+    cout << "| \\__/\\  |_|    |_|   | |_\\ \\| |   | (_| || (_| ||  __/| |   |_|" << endl;
+    cout << " \\____/                \\____/|_|    \\__,_| \\__,_| \\___||_|   (_)" << endl;
+}
+
+void util::파일명_변경(const string &디렉토리_경로, const string &이전, const string &이후) {
+    rename((디렉토리_경로 + '\\' + 이전).c_str(), (디렉토리_경로 + '\\' + 이후).c_str());
 }

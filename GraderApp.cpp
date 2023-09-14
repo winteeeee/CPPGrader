@@ -66,39 +66,15 @@ void GraderApp::메인_복사() const {
     }
 }
 
-void GraderApp::아스키_아트_출력() const {
-    cout << " _____                 _____                   _              _ " << endl;
-    cout << "/  __ \\   _      _    |  __ \\                 | |            | |" << endl;
-    cout << "| /  \\/ _| |_  _| |_  | |  \\/ _ __   __ _   __| |  ___  _ __ | |" << endl;
-    cout << "| |    |_   _||_   _| | | __ | '__| / _` | / _` | / _ \\| '__|| |" << endl;
-    cout << "| \\__/\\  |_|    |_|   | |_\\ \\| |   | (_| || (_| ||  __/| |   |_|" << endl;
-    cout << " \\____/                \\____/|_|    \\__,_| \\__,_| \\___||_|   (_)" << endl;
-}
-
-int GraderApp::컴파일_옵션_선택() const {
-    vector<string> 출력_문자열 = {"Select compilation options",
-                                  "1. Default",
-                                  "2. Compile each"};
-
-    return util::키보드_제어_콘솔_출력(출력_문자열, 1);
-}
-
-int GraderApp::메인_옵션_선택() const {
-    vector<string> 출력_문자열 = {"Do you want to copy the main?",
-                             "1. No",
-                             "2. Yes"};
-
-    return util::키보드_제어_콘솔_출력(출력_문자열, 1);
-}
-
-void GraderApp::압축_해제() const {
+void GraderApp::압축_해제(const string &압축파일명) const {
     string 원래_경로 = fs::current_path().string();
 
     for (const auto &엔트리 : fs::recursive_directory_iterator(fs::current_path())) {
         const auto &경로 = 엔트리.path().string();
         if (경로.find(".zip") != string::npos) {
             auto [디렉토리_경로, 파일명] = util::디렉토리_파일_경로_분리(경로);
-            util::압축_해제(디렉토리_경로, 파일명);
+            util::파일명_변경(디렉토리_경로, 파일명, 압축파일명);
+            util::압축_해제(디렉토리_경로, 압축파일명);
         }
     }
 
@@ -111,11 +87,18 @@ GraderApp::~GraderApp() {
 }
 
 void GraderApp::실행() {
-    아스키_아트_출력();
+    vector<string> 컴파일_선택_문자열 = {"Select compilation options",
+                                         "1. Default",
+                                         "2. Compile each"};
+    vector<string> 메인옵션_선택_문자열 = {"Do you want to copy the main?",
+                                           "1. No",
+                                           "2. Yes"};
+
+    util::아스키_아트_출력();
     cout << "\n=======================================================================================\n";
-    int 컴파일_옵션 = 컴파일_옵션_선택();
+    int 컴파일_옵션 = util::키보드_제어_콘솔_출력(컴파일_선택_문자열, 1);
     cout << "=======================================================================================\n";
-    int 메인_옵션 = 메인_옵션_선택();
+    int 메인_옵션 = util::키보드_제어_콘솔_출력(메인옵션_선택_문자열, 1);
     cout << "=======================================================================================\n";
     if (메인_옵션 == 1) {
         메인_복사();
@@ -126,8 +109,7 @@ void GraderApp::실행() {
     string 현재_학생;
     string 인수;
 
-    압축_해제();
-
+    압축_해제("codes.zip");
     auto 테스트케이스들 = 테스트케이스_로드();
     CppCompiler *컴파일러;
     if (컴파일_옵션 == 0) {
@@ -151,7 +133,7 @@ void GraderApp::실행() {
             현재_디렉토리 = 엔트리.path().string();
             string 디렉토리명 = 엔트리.path().filename().string();
 
-            if (디렉토리명.find('_') != string::npos) {
+            if (디렉토리명.find('_') != string::npos && 디렉토리명 != "__MACOSX") {
                 출력_스트림 << endl << '[' << 디렉토리명 << ']' << endl;
                 현재_학생 = 디렉토리명;
             }
