@@ -5,6 +5,8 @@
 #include <iostream>
 #include <windows.h>
 #include "complier/CppCompiler.h"
+#include "complier/DefaultCompiler.h"
+#include "complier/EachCompiler.h"
 #include "etc/util.h"
 #include "etc/TestCase.h"
 #include <conio.h>

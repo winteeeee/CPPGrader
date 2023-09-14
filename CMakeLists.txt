@@ -17,4 +17,8 @@ add_executable(CPPGrader main.cpp
         etc/util.h
         etc/TestCase.cpp
         etc/TestCase.h
+        complier/DefaultCompiler.cpp
+        complier/DefaultCompiler.h
+        complier/EachCompiler.cpp
+        complier/EachCompiler.h
 )

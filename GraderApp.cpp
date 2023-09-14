@@ -127,18 +127,24 @@ void GraderApp::실행() {
     string 인수;
 
     압축_해제();
+
     auto 테스트케이스들 = 테스트케이스_로드();
-    auto 컴파일러 = CppCompiler(출력_스트림);
+    CppCompiler *컴파일러;
+    if (컴파일_옵션 == 0) {
+        컴파일러 = new DefaultCompiler(출력_스트림);
+    } else {
+        컴파일러 = new EachCompiler(출력_스트림);
+    }
+
 
     출력_스트림 << "===================================";
     for (const auto &엔트리 : fs::recursive_directory_iterator(fs::current_path())) {
         if (엔트리.is_directory()) {
             if (!소스코드들.empty()) {
-                컴파일러.컴파일(현재_디렉토리,
+                컴파일러->컴파일(현재_디렉토리,
                                 현재_학생,
                                 소스코드들,
-                                테스트케이스들,
-                                컴파일_옵션);
+                                테스트케이스들);
                 소스코드들.clear();
             }
 
@@ -158,13 +164,14 @@ void GraderApp::실행() {
     }
 
     if (!소스코드들.empty()) {
-        컴파일러.컴파일(현재_디렉토리,
+        컴파일러->컴파일(현재_디렉토리,
                         현재_학생,
                         소스코드들,
-                        테스트케이스들,
-                        컴파일_옵션);
+                        테스트케이스들);
         소스코드들.clear();
     }
     출력_스트림 << endl << "===================================";
+
+    delete 컴파일러;
     system("pause");
 }
