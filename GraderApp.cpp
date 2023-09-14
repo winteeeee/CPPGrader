@@ -5,15 +5,19 @@ vector<TestCase> GraderApp::테스트케이스_로드() const {
     string 원래_경로 = fs::current_path().string();
     vector<TestCase> 테스트케이스들;
 
+    string 현재_디렉토리;
     vector<string> 입력파일;
     vector<string> 정답파일;
     vector<string> 명령행인수;
     for (const auto &엔트리 : fs::recursive_directory_iterator(fs::current_path())) {
-        if (엔트리.is_directory() && !입력파일.empty()) {
-            테스트케이스들.emplace_back(입력파일, 정답파일, 명령행인수);
-            입력파일.clear();
-            정답파일.clear();
-            명령행인수.clear();
+        if (엔트리.is_directory()) {
+            if (!입력파일.empty()) {
+                테스트케이스들.emplace_back(현재_디렉토리, 입력파일, 정답파일, 명령행인수);
+                입력파일.clear();
+                정답파일.clear();
+                명령행인수.clear();
+            }
+            현재_디렉토리 = 엔트리.path().filename().string();
         }
 
         string 경로 = 엔트리.path().string();
@@ -27,7 +31,7 @@ vector<TestCase> GraderApp::테스트케이스_로드() const {
     }
 
     if (!입력파일.empty()) {
-        테스트케이스들.emplace_back(입력파일, 정답파일, 명령행인수);
+        테스트케이스들.emplace_back(현재_디렉토리, 입력파일, 정답파일, 명령행인수);
     }
 
     chdir(원래_경로.c_str());
@@ -118,7 +122,6 @@ void GraderApp::실행() {
     }
 
     vector<string> 소스코드들;
-    unsigned long long 인덱스 = 0;
     string 현재_디렉토리;
     string 현재_학생;
     string 인수;
@@ -135,10 +138,8 @@ void GraderApp::실행() {
                                 현재_학생,
                                 소스코드들,
                                 테스트케이스들,
-                                컴파일_옵션,
-                                인덱스);
+                                컴파일_옵션);
                 소스코드들.clear();
-                인덱스 = (인덱스 + 1) % 테스트케이스들.size();
             }
 
             현재_디렉토리 = 엔트리.path().string();
@@ -147,12 +148,11 @@ void GraderApp::실행() {
             if (디렉토리명.find('_') != string::npos) {
                 출력_스트림 << endl << '[' << 디렉토리명 << ']' << endl;
                 현재_학생 = 디렉토리명;
-                인덱스 = 0;
             }
         } else {
             string 파일명 = 엔트리.path().filename().string();
             if (util::소스코드_존재(파일명)) {
-                소스코드들.push_back(util::큰따옴표_래핑(파일명));
+                소스코드들.push_back(파일명);
             }
         }
     }
@@ -162,8 +162,7 @@ void GraderApp::실행() {
                         현재_학생,
                         소스코드들,
                         테스트케이스들,
-                        컴파일_옵션,
-                        인덱스);
+                        컴파일_옵션);
         소스코드들.clear();
     }
     출력_스트림 << endl << "===================================";

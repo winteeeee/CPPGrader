@@ -23,12 +23,16 @@ private:
                      const TestCase &테스트케이스들,
                      const std::vector<std::string> &목표_소스코드) const;
 
+    int 테케_인덱스_찾기(const std::string &디렉토리_경로,
+                         const std::vector<std::string> &소스코드들,
+                         const std::vector<TestCase> &테스트케이스들,
+                         const int &옵션) const;
+
 public:
     CppCompiler(std::ofstream& 출력_스트림);
     void 컴파일(const std::string &디렉토리_경로,
                 const std::string &학생_정보,
                 const std::vector<std::string> &소스코드들,
                 const std::vector<TestCase> &테스트케이스들,
-                const int &옵션,
-                const int &인덱스) const;
+                const int &옵션) const;
 };

@@ -35,8 +35,6 @@ void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들
             cin.ignore();
             for (int 인덱스 = 0; 인덱스 < 소스코드들.size(); 인덱스++) {
                 string 소스코드 = 소스코드들[인덱스];
-                소스코드.replace(0, 1, "");
-                소스코드.replace(소스코드.length() - 1, 1, "");
                 코드_출력(소스코드);
 
                 util::느리게_출력("(" + to_string(인덱스 + 1) + "/" + to_string(소스코드들.size()) + ") " + "Enter any input to next");
@@ -72,14 +70,14 @@ void CppGrader::채점(const vector<string> &소스코드들, const string &정�
             }
 
             if (줄.find("FC: no differences encountered") != string::npos) {
-                util::느리게_출력("********* Same as the .out file *********\n\n");
+                cout << "********* Same as the .out file *********\n\n";
                 출력_스트림 << "O ";
                 정답 = true;
                 break;
             }
 
             if (!첫줄.empty()) {
-                util::느리게_출력(첫줄 + "\n");
+                cout << 첫줄 << '\n';
                 첫줄 = "";
             }
 
