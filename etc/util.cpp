@@ -84,7 +84,8 @@ pair<string, string> util::디렉토리_파일_경로_분리(const string &절�
 
 void util::압축_해제(const string &디렉토리_경로, const string &파일명) {
     chdir(디렉토리_경로.c_str());
-    system(string("unzip " + 큰따옴표_래핑(파일명)).c_str());
+    system(string("unzip -o " + 큰따옴표_래핑(파일명)).c_str());
+    filesystem::remove(파일명);
 }
 
 void util::아스키_아트_출력() {

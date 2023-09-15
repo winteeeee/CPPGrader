@@ -1,7 +1,7 @@
 #include "CppGrader.h"
 using namespace std;
 
-void CppGrader::코드_출력(const string &경로) const {
+void CppGrader::파일_내용_출력(const string &경로) const {
     ifstream 입력_스트림(경로);
     util::느리게_출력("\n ===== " + 경로 + " ===== \n");
     if (입력_스트림.is_open()) {
@@ -11,18 +11,18 @@ void CppGrader::코드_출력(const string &경로) const {
             cout << 줄 << endl;
         }
     } else {
-        util::느리게_출력("[Error : Code print failed]\n");
+        util::느리게_출력("[Error : print failed]\n");
     }
     cout << '\n';
     입력_스트림.close();
 }
 
-void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들) const {
+void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들, const string &정답파일, const string &출력파일명) const {
     string 명령;
     bool 탈출_불가 = true;
 
     while (탈출_불가) {
-        util::느리게_출력("\nGrade [y, n, c, ?] : ");
+        util::느리게_출력("\nGrade [y, n, h, d, c, ?] : ");
         cin >> 명령;
 
         if (명령 == "y") {
@@ -31,19 +31,27 @@ void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들
         } else if (명령 == "n") {
             출력_스트림 << "X ";
             탈출_불가 = false;
+        } else if (명령 == "h") {
+            출력_스트림 << "△ ";
+            탈출_불가 = false;
+        } else if (명령 == "d") {
+            파일_내용_출력(정답파일);
+            파일_내용_출력(출력파일명);
         } else if (명령 == "c") {
             cin.ignore();
             for (int 인덱스 = 0; 인덱스 < 소스코드들.size(); 인덱스++) {
                 string 소스코드 = 소스코드들[인덱스];
-                코드_출력(소스코드);
+                파일_내용_출력(소스코드);
 
                 util::느리게_출력("(" + to_string(인덱스 + 1) + "/" + to_string(소스코드들.size()) + ") " + "Enter any input to next");
                 getline(cin, 소스코드);
             }
         } else if (명령 == "?") {
-            util::느리게_출력("y - Correct\n");
-            util::느리게_출력("n - Wrong\n");
-            util::느리게_출력("c - Code print\n");
+            util::느리게_출력("y - perfect point\n");
+            util::느리게_출력("n - zero point\n");
+            util::느리게_출력("h - half point\n");
+            util::느리게_출력("d - diff detail\n");
+            util::느리게_출력("c - code print\n");
             util::느리게_출력("? - help print\n");
         } else {
             util::느리게_출력("[Error : Wrong Command]\n");
@@ -54,10 +62,11 @@ void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들
 CppGrader::CppGrader(ofstream &출력_스트림) : 출력_스트림(출력_스트림) {}
 
 void CppGrader::채점(const vector<string> &소스코드들, const string &정답파일, const string &출력파일명) const {
-    string 명령어 = "fc  /w /n " + util::큰따옴표_래핑(정답파일) + " " + util::큰따옴표_래핑(출력파일명) + " > temp.txt";
+    string 임시_파일명 = "temp.txt";
+    string 명령어 = "fc  /w /n " + util::큰따옴표_래핑(정답파일) + " " + util::큰따옴표_래핑(출력파일명) + " > " + 임시_파일명;
     system(명령어.c_str());
 
-    ifstream 입력_스트림("temp.txt");
+    ifstream 입력_스트림(임시_파일명);
     if (입력_스트림.is_open()) {
         string 첫줄;
         string 줄;
@@ -85,11 +94,11 @@ void CppGrader::채점(const vector<string> &소스코드들, const string &정�
         }
 
         if (!정답) {
-            채점_프롬프트_출력(소스코드들);
+            채점_프롬프트_출력(소스코드들, 정답파일, 출력파일명);
         }
     } else {
         util::느리게_출력("[Error : FC command do not execute normally]\n");
     }
     입력_스트림.close();
-    fs::remove("temp.txt");
+    fs::remove(임시_파일명);
 }
