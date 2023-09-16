@@ -1,12 +1,15 @@
 #pragma once
+
 #include <string>
 #include <vector>
 #include <cstdlib>
 #include <unistd.h>
 #include <iostream>
 #include <filesystem>
+
 #include "../etc/TestCase.h"
 #include "../executor/CppExecutor.h"
+
 namespace fs = std::filesystem;
 
 class CppCompiler {

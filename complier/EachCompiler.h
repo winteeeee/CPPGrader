@@ -1,4 +1,5 @@
 #pragma once
+
 #include "CppCompiler.h"
 
 class EachCompiler : public CppCompiler {

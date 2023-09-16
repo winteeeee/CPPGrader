@@ -19,21 +19,17 @@ void CppGrader::파일_내용_출력(const string &경로) const {
 
 void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들, const string &정답파일, const string &출력파일명) const {
     string 명령;
-    bool 탈출_불가 = true;
 
-    while (탈출_불가) {
+    while (명령 != "y" && 명령 != "n" && 명령 != "h") {
         util::느리게_출력("\nGrade [y, n, h, d, c, ?] : ");
         cin >> 명령;
 
         if (명령 == "y") {
             출력_스트림 << "O ";
-            탈출_불가 = false;
         } else if (명령 == "n") {
             출력_스트림 << "X ";
-            탈출_불가 = false;
         } else if (명령 == "h") {
             출력_스트림 << "△ ";
-            탈출_불가 = false;
         } else if (명령 == "d") {
             파일_내용_출력(정답파일);
             파일_내용_출력(출력파일명);
@@ -68,32 +64,18 @@ void CppGrader::채점(const vector<string> &소스코드들, const string &정�
 
     ifstream 입력_스트림(임시_파일명);
     if (입력_스트림.is_open()) {
-        string 첫줄;
         string 줄;
-        bool 정답 = false;
 
-        while (getline(입력_스트림, 줄)) {
-            if (첫줄.empty()) {
-                첫줄 = 줄;
-                continue;
+        getline(입력_스트림, 줄);
+        getline(입력_스트림, 줄);
+        if (줄.find("FC: no differences encountered") != string::npos) {
+            cout << "********* Same as the .out file *********\n\n";
+            출력_스트림 << "O ";
+        } else {
+            입력_스트림.seekg(0);
+            while(getline(입력_스트림, 줄)) {
+                cout << 줄 << endl;
             }
-
-            if (줄.find("FC: no differences encountered") != string::npos) {
-                cout << "********* Same as the .out file *********\n\n";
-                출력_스트림 << "O ";
-                정답 = true;
-                break;
-            }
-
-            if (!첫줄.empty()) {
-                cout << 첫줄 << '\n';
-                첫줄 = "";
-            }
-
-            cout << 줄 << endl;
-        }
-
-        if (!정답) {
             채점_프롬프트_출력(소스코드들, 정답파일, 출력파일명);
         }
     } else {

@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -7,6 +8,7 @@
 #include <algorithm>
 #include <unistd.h>
 #include <filesystem>
+
 #define 방향키_위 72
 #define 방향키_아래 80
 #define 엔터 13
