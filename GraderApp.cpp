@@ -44,10 +44,10 @@ void GraderApp::메인_복사() const {
 
     while (메인_이름 != "1" && 목표_폴더 != "1") {
         cout << "Please enter the name of the main file to copy (enter 1 for exit) : ";
-        cin.ignore();
         getline(cin, 메인_이름);
         cout << "Please enter the path of the target folder (enter 1 for exit) : ";
         cin >> 목표_폴더;
+        cin.ignore();
 
         if (메인_이름 != "1" && 목표_폴더 != "1") {
             fs::path 디렉토리_경로;
@@ -55,9 +55,8 @@ void GraderApp::메인_복사() const {
             for (const auto &엔트리: fs::recursive_directory_iterator(fs::current_path())) {
                 if (엔트리.is_directory()) {
                     디렉토리_경로 = 엔트리.path();
-                } else {
-                    string 파일 = 엔트리.path().filename().string();
-                    if (util::소스코드_존재(파일) && 디렉토리_경로.filename().string() == 목표_폴더) {
+                    if (디렉토리_경로.filename().string() == 목표_폴더) {
+                        cout << 메인_이름 << " to " << (디렉토리_경로.string() + "/" + 메인_이름) << endl;
                         CopyFile(메인_이름.c_str(), (디렉토리_경로.string() + "/" + 메인_이름).c_str(), false);
                     }
                 }
