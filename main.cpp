@@ -4,7 +4,7 @@
 #define 자동 auto
 #define 반환 return
 #define 채점앱 GraderApp
-
+#include <string>
 정수형 메인() {
     자동 앱 = 채점앱("result.txt");
     앱.실행();

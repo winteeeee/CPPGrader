@@ -1,7 +1,7 @@
 #include "CppExecutor.h"
 using namespace std;
 
-CppExecutor::CppExecutor(ofstream &출력_스트림) : 채점기(출력_스트림) {}
+CppExecutor::CppExecutor(ofstream &출력_스트림, const string &루트_디렉토리) : 채점기(출력_스트림, 루트_디렉토리), 루트_디렉토리(루트_디렉토리) {}
 
 void CppExecutor::실행(const string &입력파일_경로,
                        const string &정답파일_경로,
@@ -23,7 +23,10 @@ void CppExecutor::실행(const string &입력파일_경로,
 
     string 명령어 = ".\\output " + util::큰따옴표_래핑(명령행_인수);
     if (입력파일_경로.find("console") == string::npos) {
-        명령어 += (" < " + util::큰따옴표_래핑(입력파일_경로) + " > " + 출력파일명);
+        if (!입력파일_경로.empty()) {
+            명령어 += (" < " + util::큰따옴표_래핑(루트_디렉토리 + "/" + 입력파일_경로));
+        }
+        명령어 += " > " + 출력파일명;
         system(명령어.c_str());
     } else {
         system(명령어.c_str());

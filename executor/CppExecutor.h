@@ -14,8 +14,9 @@ namespace fs = std::filesystem;
 class CppExecutor {
 private:
     CppGrader 채점기;
+    std::string 루트_디렉토리;
 public:
-    CppExecutor(std::ofstream& 출력_스트림);
+    CppExecutor(std::ofstream& 출력_스트림, const std::string &루트_디렉토리);
     void 실행(const std::string &입력파일_경로,
               const std::string &정답파일_경로,
               const std::string &디렉토리_경로,

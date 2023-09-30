@@ -31,7 +31,7 @@ void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들
         } else if (명령 == "h") {
             출력_스트림 << "△ ";
         } else if (명령 == "d") {
-            파일_내용_출력(정답파일);
+            파일_내용_출력(루트_디렉토리 + "/" + 정답파일);
             파일_내용_출력(출력파일명);
         } else if (명령 == "c") {
             cin.ignore();
@@ -55,11 +55,11 @@ void CppGrader::채점_프롬프트_출력(const vector<string> &소스코드들
     }
 }
 
-CppGrader::CppGrader(ofstream &출력_스트림) : 출력_스트림(출력_스트림) {}
+CppGrader::CppGrader(ofstream &출력_스트림, const string &루트_디렉토리) : 출력_스트림(출력_스트림), 루트_디렉토리(루트_디렉토리) {}
 
 void CppGrader::채점(const vector<string> &소스코드들, const string &정답파일, const string &출력파일명) const {
     string 임시_파일명 = "temp.txt";
-    string 명령어 = "fc  /w /n " + util::큰따옴표_래핑(정답파일) + " " + util::큰따옴표_래핑(출력파일명) + " > " + 임시_파일명;
+    string 명령어 = "fc  /w /n " + util::큰따옴표_래핑(출력파일명) + " " + util::큰따옴표_래핑(루트_디렉토리 + "/" + 정답파일) + " > " + 임시_파일명;
     system(명령어.c_str());
 
     ifstream 입력_스트림(임시_파일명);

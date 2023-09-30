@@ -15,10 +15,6 @@ add_executable(CPPGrader main.cpp
         grader/CppGrader.h
         etc/util.cpp
         etc/util.h
-        etc/TestCase.cpp
-        etc/TestCase.h
-        complier/DefaultCompiler.cpp
-        complier/DefaultCompiler.h
-        complier/EachCompiler.cpp
-        complier/EachCompiler.h
+        etc/Problem.cpp
+        etc/Problem.h
 )

@@ -9,9 +9,13 @@
 #include <unistd.h>
 #include <filesystem>
 
+#include "Problem.h"
+
 #define 방향키_위 72
 #define 방향키_아래 80
 #define 엔터 13
+
+namespace fs = std::filesystem;
 
 class util {
 public:
@@ -24,4 +28,6 @@ public:
     static void 압축_해제(const std::string &디렉토리_경로, const std::string &파일명);
     static void 아스키_아트_출력();
     static void 파일명_변경(const std::string &디렉토리_경로, const std::string &이전, const std::string &이후);
+    static std::vector<Problem> 컨픽_읽기(char 구분자=',');
+    static void 파일_복사(const std::string& 대상, const std::string& 목표);
 };
